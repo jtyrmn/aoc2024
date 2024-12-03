@@ -8,7 +8,7 @@ fn main() {
 
     let part1 = solve_part1(&input);
     println!("part 1: {}", part1);
-    let part2 = solve_part2(input);
+    let part2 = solve_part2(&input);
     println!("part 2: {}", part2);
     // println!("{:?}", debug(&input));
 }
@@ -57,18 +57,19 @@ fn is_safe(levels: &Vec<i64>) -> bool {
     change.clone().all(|c| c > 0) || change.clone().all(|c| c < 0)
 }
 
-fn solve_part2(items: Vec<Vec<i64>>) -> usize {
+fn solve_part2(items: &Vec<Vec<i64>>) -> usize {
     items
         .into_iter()
         .filter(|item| {
-            for i in 0..item.len() {
-                let mut new_item = item.clone();
-                new_item.remove(i);
-                if is_safe(&new_item) {
-                    return true;
-                }
-            }
-            false
+            (0..item.len()).any(|idx| {
+                let new: Vec<i64> = item
+                    .into_iter()
+                    .enumerate()
+                    .filter(|(i, _)| idx != *i)
+                    .map(|(_, item)| *item)
+                    .collect();
+                is_safe(&new)
+            })
         })
         .count()
 }

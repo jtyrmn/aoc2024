@@ -3,7 +3,7 @@ use std::{collections::HashMap, fs::File, io::{self, BufRead}};
 const LIST_LEN: usize = 1000;
 
 fn main() {
-    let (mut left, mut right) = get_input("input.txt");
+    let (left, right) = get_input("input.txt");
 
     println!("part 1: {}", calculate_distances(left.clone(), right.clone()));
     println!("part 2: {}", calculate_similarity(left, right));
